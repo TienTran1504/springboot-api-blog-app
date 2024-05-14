@@ -1,6 +1,6 @@
 Here's a comprehensive README.md for your project:
 
-````markdown
+
 # Spring Boot Blog REST API
 
 This project is a RESTful API for a blog application built with Spring Boot. The API provides endpoints for managing blog posts, comments, and user accounts.
@@ -20,7 +20,7 @@ Before you begin, ensure you have the following installed:
    ```bash
    git clone https://github.com/TienTran1504/spring-boot-blog-rest-api.git
    ```
-````
+
 
 2. **Navigate to the project directory**
    ```bash
