@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,9 +42,16 @@ public class CommentController {
 
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(@PathVariable(name = "postId") Long postId, @Valid @RequestBody CommentDto commentDto) {
-//        //get info user logged in current user
-//        commentDto.setName(User());
-//        commentDto.setEmail(UserDetails.getUsername());
+        // Get info of the currently logged in user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        String email = user.getUsername();
+        String username = new String();
+        if(email.contains("@gmail.com")){
+            username = email.substring(0, email.indexOf("@gmail.com"));
+        }
+        commentDto.setEmail(email);
+        commentDto.setName(username);
         return new ResponseEntity<>(commentService.createComment(postId, commentDto), HttpStatus.CREATED);
     }
 
