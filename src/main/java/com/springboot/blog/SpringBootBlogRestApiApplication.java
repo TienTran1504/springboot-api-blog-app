@@ -49,6 +49,10 @@ public class SpringBootBlogRestApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		// check if exist ROLE_ADMIN and ROLE_USER in database
+		if (roleRepository.findByName("ROLE_ADMIN") != null || roleRepository.findByName("ROLE_USER") != null) {
+			return;
+		}
 		Role adminRole = new Role();
 		adminRole.setName("ROLE_ADMIN");
 		roleRepository.save(adminRole);

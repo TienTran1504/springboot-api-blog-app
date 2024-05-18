@@ -1,7 +1,9 @@
 package com.springboot.blog.controller;
 
 import com.springboot.blog.payload.CategoryDto;
+import com.springboot.blog.payload.CategoryResponse;
 import com.springboot.blog.service.CategoryService;
+import com.springboot.blog.utils.AppConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -66,8 +68,13 @@ public class CategoryController {
             description = "All categories retrieved successfully"
     )
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getAllCategories() {
-        return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
+    public ResponseEntity<CategoryResponse> getAllCategories(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortOrder", defaultValue = AppConstants.DEFAULT_SORT_ORDER, required = false) String sortOrder
+    ) {
+        return new ResponseEntity<>(categoryService.getAllCategories(pageNo,pageSize,sortBy,sortOrder), HttpStatus.OK);
     }
 
     // Update category API
